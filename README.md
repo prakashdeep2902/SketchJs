@@ -299,3 +299,195 @@ Since React is a frontend framework, securing APIs primarily involves:
 ### **Final Thoughts**
 
 By securing API calls and optimizing performance at multiple levels, you ensure that your React app is not only fast but also secure. Do you want help implementing any of these in your project? 🚀
+
+### **Storing JWT in httpOnly Cookies (Best Practice) in React + Node.js**
+
+To securely store JWT tokens in **httpOnly cookies**, follow these steps:
+
+---
+
+## **1. Backend (Node.js + Express)**
+
+We will create an authentication route that sets a **secure httpOnly cookie**.
+
+### **A. Install Required Packages**
+
+```sh
+npm install express jsonwebtoken cookie-parser cors dotenv
+```
+
+### **B. Setup Express Server**
+
+```js
+require("dotenv").config();
+const express = require("express");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+
+// Allow frontend requests (adjust for production)
+app.use(
+  cors({
+    origin: "http://localhost:3000", // React frontend URL
+    credentials: true, // Allow cookies to be sent
+  })
+);
+
+const users = [{ id: 1, username: "goutham", password: "password" }];
+
+const generateToken = (user) => {
+  return jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+};
+
+// **Login Route**
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
+  const token = generateToken(user);
+
+  // **Set JWT in httpOnly Cookie**
+  res.cookie("token", token, {
+    httpOnly: true, // Prevent JavaScript access (XSS protection)
+    secure: process.env.NODE_ENV === "production", // Use Secure flag in production
+    sameSite: "strict", // Prevent CSRF attacks
+    maxAge: 60 * 60 * 1000, // 1 hour
+  });
+
+  res.json({ message: "Logged in successfully" });
+});
+
+// **Protected Route**
+app.get("/profile", (req, res) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.json({ message: "Access granted", userId: decoded.id });
+  } catch (error) {
+    res.status(403).json({ message: "Invalid token" });
+  }
+});
+
+// **Logout Route (Clearing Cookie)**
+app.post("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out successfully" });
+});
+
+// Start server
+app.listen(5000, () => console.log("Server running on port 5000"));
+```
+
+---
+
+## **2. Frontend (React)**
+
+### **A. Install Axios**
+
+```sh
+npm install axios
+```
+
+### **B. Configure Axios for Cookies**
+
+```js
+import axios from "axios";
+
+const API = axios.create({
+  baseURL: "http://localhost:5000",
+  withCredentials: true, // Allow cookies to be sent
+});
+
+export default API;
+```
+
+### **C. Implement Login in React**
+
+```js
+import { useState } from "react";
+import API from "./api"; // Axios instance
+
+const Login = () => {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleLogin = async () => {
+    try {
+      const res = await API.post("/login", credentials);
+      alert(res.data.message);
+    } catch (error) {
+      console.error("Login error", error);
+      alert("Invalid credentials");
+    }
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Username"
+        onChange={(e) =>
+          setCredentials({ ...credentials, username: e.target.value })
+        }
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) =>
+          setCredentials({ ...credentials, password: e.target.value })
+        }
+      />
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  );
+};
+
+export default Login;
+```
+
+### **D. Fetch Protected Data**
+
+```js
+const fetchProfile = async () => {
+  try {
+    const res = await API.get("/profile");
+    console.log(res.data);
+  } catch (error) {
+    console.error("Unauthorized", error);
+  }
+};
+```
+
+### **E. Logout User**
+
+```js
+const handleLogout = async () => {
+  await API.post("/logout");
+  alert("Logged out successfully");
+};
+```
+
+---
+
+## **3. Why This is Secure?**
+
+✅ **httpOnly Cookie:** JavaScript cannot access the token, preventing **XSS attacks**.  
+✅ **SameSite=Strict:** Prevents **CSRF attacks**.  
+✅ **Secure Cookie in Production:** Only sent over HTTPS.  
+✅ **CORS Config with `credentials: true`** ensures cookies work across frontend & backend.
+
+Would you like to add **refresh tokens** for better security? 🚀
