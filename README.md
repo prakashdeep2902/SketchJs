@@ -200,3 +200,102 @@ console.log(removeDuplicates(nums)); // Output: [1, 2, 3, 4, 5, 6]
 ✅ **Space Complexity:** `O(n)` (For storing unique elements in an object).
 
 This is an **optimized approach** compared to using `indexOf()`! 🚀
+
+Securing RESTful APIs and optimizing performance in React go beyond just lazy loading. Here’s how you can handle both effectively:
+
+---
+
+### **1. Securing RESTful APIs in React**
+
+Since React is a frontend framework, securing APIs primarily involves:
+
+#### **A. Authentication & Authorization**
+
+- Use **JWT (JSON Web Token)** or **OAuth** for API authentication.
+- Store JWT securely:
+  - **Best Practice**: Store tokens in **httpOnly cookies** (prevents XSS attacks).
+  - **Alternative**: Store in **memory (React state)** for higher security.
+  - **Avoid**: LocalStorage or sessionStorage (prone to XSS attacks).
+
+#### **B. Handling API Requests Securely**
+
+- Use **Axios interceptors** to attach tokens to requests:
+  ```js
+  axios.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${yourAccessToken}`;
+    return config;
+  });
+  ```
+- Implement **rate limiting** on the backend to prevent abuse.
+
+#### **C. Prevent API Misuse**
+
+- Use **CORS policies** to restrict API access to allowed origins.
+- Implement **CSRF protection** when using cookies for authentication.
+- Encrypt sensitive data before sending it over the network.
+
+---
+
+### **2. Performance Optimization Beyond Lazy Loading**
+
+#### **A. Code Splitting & Dynamic Imports**
+
+- Split code at the route level or component level using `React.lazy` and `Suspense`:
+
+  ```js
+  const Dashboard = React.lazy(() => import("./Dashboard"));
+
+  function App() {
+    return (
+      <Suspense fallback={<Loader />}>
+        <Dashboard />
+      </Suspense>
+    );
+  }
+  ```
+
+#### **B. Memoization & Avoiding Unnecessary Renders**
+
+- Use `React.memo` for components that do not frequently change.
+- Use `useCallback` for functions and `useMemo` for computed values:
+  ```js
+  const expensiveCalculation = useMemo(() => computeHeavyTask(data), [data]);
+  ```
+
+#### **C. Optimizing API Calls**
+
+- Implement **debouncing & throttling** for API requests:
+  ```js
+  const debouncedSearch = useCallback(debounce(handleSearch, 300), []);
+  ```
+- Use **SWC (Service Workers Cache) or React Query** for caching API responses.
+  ```js
+  const { data } = useQuery("userData", fetchUserData);
+  ```
+
+#### **D. Virtualization for Large Lists**
+
+- Use **React Virtualized** or **React Window** for rendering large lists efficiently.
+
+  ```js
+  import { FixedSizeList } from "react-window";
+
+  <FixedSizeList height={400} itemCount={items.length} itemSize={50}>
+    {({ index, style }) => <div style={style}>{items[index]}</div>}
+  </FixedSizeList>;
+  ```
+
+#### **E. Optimizing Image & Asset Loading**
+
+- Use **WebP format** for images.
+- Implement **lazy loading with `loading="lazy"`** for images:
+  ```js
+  <img src="image.webp" loading="lazy" alt="Optimized Image" />
+  ```
+- Use a **CDN** (Content Delivery Network) for serving assets.
+
+---
+
+### **Final Thoughts**
+
+By securing API calls and optimizing performance at multiple levels, you ensure that your React app is not only fast but also secure. Do you want help implementing any of these in your project? 🚀
