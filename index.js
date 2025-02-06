@@ -72,21 +72,29 @@
 // const nums = [1, 2, 2, 3, 4, 4, 5, 6, 6, 6];
 // console.log(removeDuplicates(nums)); // Output: [1, 2, 3, 4, 5, 6]
 
-function findSecondMax(arr) {
-  let Max = -Infinity;
-  let sMax = -Infinity;
+// function findSecondMax(arr) {
+//   let Max = -Infinity;
+//   let sMax = -Infinity;
 
-  for (let num of arr) {
-    if (num > Max) {
-      sMax = Max;
-      Max = num;
-    } else if (num > sMax && num != Max) {
-      sMax = num;
-    }
-  }
+//   for (let num of arr) {
+//     if (num > Max) {
+//       sMax = Max;
+//       Max = num;
+//     } else if (num > sMax && num != Max) {
+//       sMax = num;
+//     }
+//   }
 
-  return sMax !== -Infinity ? sMax : null;
+//   return sMax !== -Infinity ? sMax : null;
+// }
+
+// const arr = [10, 20, 4, 45, 99, 20, 10];
+// console.log(findSecondMax(arr)); // Output: 45
+
+function moveFirstKElements(arr, k) {
+  return [...arr.slice(k), ...arr.slice(0, k)];
 }
 
-const arr = [10, 20, 4, 45, 99, 20, 10];
-console.log(findSecondMax(arr)); // Output: 45
+const arr = [1, 2, 3, 4, 5, 6, 7];
+const k = 3;
+console.log(moveFirstKElements(arr, k)); // Output: [4, 5, 6, 7, 1, 2, 3]

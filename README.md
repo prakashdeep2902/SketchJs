@@ -642,3 +642,85 @@ console.log(moveLastKElements(arr, k)); // Output: [5, 6, 7, 1, 2, 3, 4]
 ---
 
 Let me know if you'd like to modify this further or need help with another variation!
+
+To flatten an array **without using built-in functions** like `slice`, `flat`, or `reduce`, you can manually iterate through the array and recursively check if any elements are arrays. If they are, you can recursively flatten them. Here's how you can implement that:
+
+### **Flattening Array (Without Built-in Functions)**
+
+#### **Implementation using Recursion:**
+
+```js
+function flattenArray(arr) {
+  let result = []; // This will store the flattened array
+
+  // Iterate through each element of the array
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      // If the current element is an array, flatten it recursively
+      result = result.concat(flattenArray(arr[i]));
+    } else {
+      // If it's not an array, push it directly to the result
+      result.push(arr[i]);
+    }
+  }
+
+  return result;
+}
+
+const nestedArray = [1, [2, 3], [4, [5, 6]], 7];
+const flattenedArray = flattenArray(nestedArray);
+console.log(flattenedArray); // Output: [1, 2, 3, 4, 5, 6, 7]
+```
+
+### **Explanation:**
+
+1. **Recursion**: The function `flattenArray` is called recursively for every subarray within the main array. It flattens each subarray step-by-step.
+2. **Array.isArray()**: This checks if an element is an array.
+3. **Concatenation**: The `concat()` method is used to merge the flattened subarrays into the final result array.
+
+### **Step-by-step Execution**:
+
+- The function starts with an empty `result` array.
+- It iterates through the array, and if it encounters an array, it calls itself recursively to flatten that array.
+- If it encounters a non-array element, it directly adds that element to the `result`.
+
+---
+
+### **Iterative Approach** (using a stack):
+
+You can also flatten the array iteratively using a stack, which avoids recursion.
+
+```js
+function flattenArrayIterative(arr) {
+  let stack = [...arr]; // Create a copy of the array to work with
+  let result = []; // This will store the flattened array
+
+  while (stack.length) {
+    const item = stack.pop(); // Remove the last item from the stack
+
+    if (Array.isArray(item)) {
+      // If the item is an array, push its elements to the stack
+      stack.push(...item);
+    } else {
+      // If the item is not an array, push it to the result
+      result.unshift(item); // Use unshift to maintain the original order
+    }
+  }
+
+  return result;
+}
+
+const nestedArray = [1, [2, 3], [4, [5, 6]], 7];
+const flattenedArray = flattenArrayIterative(nestedArray);
+console.log(flattenedArray); // Output: [1, 2, 3, 4, 5, 6, 7]
+```
+
+### **Explanation:**
+
+- This approach uses a **stack** to hold elements and iterates through them.
+- Whenever it encounters an array, it **pushes** its elements onto the stack for further processing.
+- If it encounters a non-array element, it adds it to the `result` array using `unshift()` (to keep the order intact since we are popping from the stack).
+
+Both of these methods flatten the array without using any built-in array functions specifically designed for flattening, such as `slice()`, `flat()`, or `reduce()`.
+
+Would you like to explore or modify this further?
