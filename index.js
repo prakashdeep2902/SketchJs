@@ -91,10 +91,34 @@
 // const arr = [10, 20, 4, 45, 99, 20, 10];
 // console.log(findSecondMax(arr)); // Output: 45
 
-function moveFirstKElements(arr, k) {
-  return [...arr.slice(k), ...arr.slice(0, k)];
+// function moveFirstKElements(arr, k) {
+//   return [...arr.slice(k), ...arr.slice(0, k)];
+// }
+
+// const arr = [1, 2, 3, 4, 5, 6, 7];
+// const k = 3;
+// console.log(moveFirstKElements(arr, k)); // Output: [4, 5, 6, 7, 1, 2, 3]
+
+function flattenArray(arr) {
+  let stack = [...arr];
+  console.log(stack);
+  let result = [];
+  while (stack.length) {
+    const item = stack.pop();
+    console.log("item::", item);
+
+    if (Array.isArray(item)) {
+      stack.push(...item);
+
+      console.log("stack::", stack);
+    } else {
+      result.unshift(item);
+    }
+
+    console.log("result::", result);
+  }
 }
 
-const arr = [1, 2, 3, 4, 5, 6, 7];
-const k = 3;
-console.log(moveFirstKElements(arr, k)); // Output: [4, 5, 6, 7, 1, 2, 3]
+const nestedArray = [1, [2, 3], [4, [5, 6]], 7];
+const flattenedArray = flattenArray(nestedArray);
+console.log(flattenedArray); // Output: [1, 2, 3, 4, 5, 6, 7]
