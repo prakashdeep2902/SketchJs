@@ -1,0 +1,53 @@
+Since you're interviewing for a React.js Developer role at Sketch Brahma Technologies, here are some questions categorized by difficulty level:
+
+### **Basic React.js Questions**
+1. What is React, and how does it differ from other JavaScript frameworks?
+2. What are the key features of React?
+3. What is JSX, and how is it different from HTML?
+4. Explain the virtual DOM and how it improves performance.
+5. What are components in React? Explain functional and class components.
+6. What is the difference between state and props in React?
+7. How does React handle events? How is it different from handling events in plain JavaScript?
+
+### **Intermediate React.js Questions**
+8. What are React Hooks? Can you explain useState and useEffect with examples?
+9. What is the difference between useState and useReducer?
+10. What is context API, and when should you use it?
+11. What is prop drilling, and how can it be avoided?
+12. How does React handle conditional rendering?
+13. What are controlled and uncontrolled components in React?
+14. What are higher-order components (HOC), and how do they work?
+15. How does React handle performance optimization? Explain memoization in React.
+16. What is lazy loading, and how does React handle it?
+
+### **Advanced React.js Questions**
+17. How does React Fiber work? What benefits does it provide?
+18. Explain concurrent mode in React.
+19. What are Suspense and Error Boundaries in React?
+20. What is Server-Side Rendering (SSR), and how does it compare to Client-Side Rendering (CSR)?
+21. How does React work with Webpack and Babel?
+22. How do you optimize React applications for performance?
+23. What is reconciliation in React?
+24. How would you handle authentication in a React app?
+
+### **React + TypeScript Questions (Since you know TypeScript)**
+25. How do you use TypeScript with React?
+26. What are interfaces and types in TypeScript, and how do they work with React props?
+27. How do you define state types in functional components?
+
+### **Practical Coding Questions**
+28. Implement a simple React counter using useState.
+29. Fetch data from an API using useEffect and display it in a component.
+30. Create a custom hook to manage form inputs.
+
+Do you want to focus on any specific area for preparation? 🚀
+
+
+
+
+reparing for a React.js Developer interview at Sketch Brahma Technologies involves a solid understanding of JavaScript fundamentals, as the company emphasizes proficiency in JavaScript and ES6 features.citeturn0search6
+ased on available information, candidates have been asked questions related to JavaScript and Angular during initial interview rounds.citeturn0search0
+dditionally, for front-end developer positions, topics such as React lifecycle methods, utilization of React hooks, and understanding of Redux have been discussed.citeturn0search3
+o enhance your preparation, consider reviewing the following JavaScript topics:
+1. **JavaScript Closures**: nderstand how closures work and their common use cases.2. **Asynchronous JavaScript**: e familiar with callbacks, Promises, and async/await syntax.3. **ES6 Features**: ave a strong grasp of ES6 features such as arrow functions, destructuring, template literals, and modules.4. **Event Loop**: nderstand the JavaScript event loop, call stack, and task queues.5. **Prototypal Inheritance**: now how JavaScript inheritance works and the prototype chain.6. **Scope and Hoisting**: e clear about function scope, block scope, and variable hoisting.7. **DOM Manipulation**: nderstand how to select and manipulate DOM elements.8. **Error Handling**: now how to handle exceptions using try/catch and understand error propagation.9. **Functional Programming**: amiliarize yourself with concepts like higher-order functions, pure functions, and immutability.10. **JavaScript Design Patterns**: earn common design patterns used in JavaScript applications.
+y focusing on these areas, you'll be well-prepared to demonstrate your JavaScript expertise during the interview.
