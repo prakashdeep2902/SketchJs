@@ -1,5 +1,5 @@
 Since you're interviewing for a React.js Developer role at Sketch Brahma Technologies, here are some questions categorized by difficulty level:
-
+  
 ### **Basic React.js Questions**
 1. What is React, and how does it differ from other JavaScript frameworks?
 2. What are the key features of React?
