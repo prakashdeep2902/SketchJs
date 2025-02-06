@@ -491,3 +491,154 @@ const handleLogout = async () => {
 ✅ **CORS Config with `credentials: true`** ensures cookies work across frontend & backend.
 
 Would you like to add **refresh tokens** for better security? 🚀
+
+Sure! Here's a brief explanation of `slice` and `splice` with examples:
+
+### **1. `slice()`**
+
+- The `slice()` method is used to **extract a portion** of an array and **return a new array** (it does not modify the original array).
+- It can take **two arguments**:
+  - **`start`**: The index to begin extraction (inclusive).
+  - **`end`** (optional): The index to stop extraction (exclusive). If not provided, it extracts until the end of the array.
+
+#### **Example of `slice()`**:
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+const newArr = arr.slice(1, 4); // Extracts from index 1 to index 3 (4 is excluded)
+console.log(newArr); // Output: [2, 3, 4]
+
+console.log(arr); // Original array remains unchanged: [1, 2, 3, 4, 5]
+```
+
+- **`arr.slice(1, 4)`** extracts elements from index `1` to `3` (inclusive of `1`, exclusive of `4`).
+- It does **not modify** the original array, it returns a new array.
+
+---
+
+### **2. `splice()`**
+
+- The `splice()` method is used to **modify the array in place**. It can **remove, add, or replace elements**.
+- It takes at least **two arguments**:
+  - **`start`**: The index where to begin modifying the array.
+  - **`deleteCount`**: The number of elements to remove from the array (optional).
+  - **`items`** (optional): Items to add to the array at the specified position (optional).
+
+#### **Example of `splice()`**:
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+// Remove 2 elements starting at index 1
+const removedItems = arr.splice(1, 2);
+console.log(removedItems); // Output: [2, 3]
+console.log(arr); // Output: [1, 4, 5]  (array modified)
+
+// Add 6 and 7 at index 1
+arr.splice(1, 0, 6, 7);
+console.log(arr); // Output: [1, 6, 7, 4, 5]  (array modified)
+```
+
+- **`arr.splice(1, 2)`**: Removes 2 elements starting from index `1`. The removed elements are returned as a new array.
+- **`arr.splice(1, 0, 6, 7)`**: Adds `6` and `7` starting at index `1` without removing any elements.
+
+### **Key Differences**:
+
+- **`slice()`**: Returns a new array, doesn't modify the original array.
+- **`splice()`**: Modifies the original array in place and returns an array of removed elements (if any).
+
+---
+
+Let me know if you need more examples or further explanation! 😊
+
+To move **k elements** in an array, there are typically two interpretations:
+
+1. **Move the first k elements to the end** of the array.
+2. **Move the last k elements to the front** of the array.
+
+We’ll cover both of these scenarios below.
+
+---
+
+### **1. Move the First k Elements to the End of the Array**
+
+This means you want to shift the first `k` elements to the end of the array, and the rest should remain in their original order.
+
+#### **Example:**
+
+- Input: `[1, 2, 3, 4, 5, 6, 7]`, k = 3
+- Output: `[4, 5, 6, 7, 1, 2, 3]`
+
+#### **Implementation:**
+
+```js
+function moveFirstKElements(arr, k) {
+  const n = arr.length;
+
+  // Handle k greater than array length
+  k = k % n; // In case k is larger than the length of the array
+
+  const movedArr = [...arr.slice(k), ...arr.slice(0, k)]; // Combine the array parts
+
+  return movedArr;
+}
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+const k = 3;
+console.log(moveFirstKElements(arr, k)); // Output: [4, 5, 6, 7, 1, 2, 3]
+```
+
+### **Explanation:**
+
+- `arr.slice(k)` takes the elements from index `k` to the end of the array.
+- `arr.slice(0, k)` takes the first `k` elements.
+- Combining them with the spread operator (`...`) gives the desired result.
+
+---
+
+### **2. Move the Last k Elements to the Front of the Array**
+
+This means you want to shift the last `k` elements to the front of the array, and the rest of the elements should stay in the same order.
+
+#### **Example:**
+
+- Input: `[1, 2, 3, 4, 5, 6, 7]`, k = 3
+- Output: `[5, 6, 7, 1, 2, 3, 4]`
+
+#### **Implementation:**
+
+```js
+function moveLastKElements(arr, k) {
+  const n = arr.length;
+
+  // Handle k greater than array length
+  k = k % n; // In case k is larger than the length of the array
+
+  const movedArr = [...arr.slice(n - k), ...arr.slice(0, n - k)]; // Combine the array parts
+
+  return movedArr;
+}
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+const k = 3;
+console.log(moveLastKElements(arr, k)); // Output: [5, 6, 7, 1, 2, 3, 4]
+```
+
+### **Explanation:**
+
+- `arr.slice(n - k)` extracts the last `k` elements of the array.
+- `arr.slice(0, n - k)` takes the first `n - k` elements.
+- By combining them, the last `k` elements are moved to the front.
+
+---
+
+### **3. Edge Case Handling**
+
+- If `k` is larger than the array's length, we take `k % arr.length` to handle cases where `k` exceeds the array length.
+- If `k == 0`, no change will occur to the array.
+- If `k == arr.length`, the array stays unchanged after the operation.
+
+---
+
+Let me know if you'd like to modify this further or need help with another variation!
