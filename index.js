@@ -36,12 +36,10 @@
 //         break;
 //       }
 //     }
-
 //     if (!d) {
 //       unique.push(arr[i]);
 //     }
 //   }
-
 //   return unique;
 // }
 // const nums = [1, 2, 2, 3, 4, 4, 5, 6, 6, 6];
@@ -105,12 +103,9 @@ function flattenArray(arr) {
   let result = [];
   while (stack.length) {
     const item = stack.pop();
-    console.log("item::", item);
 
     if (Array.isArray(item)) {
       stack.push(...item);
-
-      console.log("stack::", stack);
     } else {
       result.unshift(item);
     }

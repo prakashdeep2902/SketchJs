@@ -1,5 +1,7 @@
 body {
 }
 
-@media only screen (max-width: 600px) {
+@media (max-width: 600px) {
+  h1 {
+  }
 }
